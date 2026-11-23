@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 推荐作用域：LSPosed 读取 assets/xposed_scope，EdXposed 旧版读这里的数组，
+         两种写法都给上，管理器里勾选作用域时这两个包会排在「推荐」里 -->
+    <string-array name="xposedscope">
+        <item>com.android.systemui</item>
+        <item>com.android.settings</item>
+    </string-array>
+</resources>

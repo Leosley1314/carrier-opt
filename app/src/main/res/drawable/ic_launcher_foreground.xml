@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 自适应图标前景：白色 SIM 卡 + 卡内信号条，画在 108 的坐标系里，
+     内容落在中心 66 的安全区内，被任何形状的遮罩裁掉都不会切到主体 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M40,24 L62,24 L76,38 L76,76 A8,8 0 0 1 68,84 L40,84 A8,8 0 0 1 32,76 L32,32 A8,8 0 0 1 40,24 Z" />
+    <path
+        android:fillColor="#1A73E8"
+        android:pathData="M46,44 H62 A4,4 0 0 1 66,48 V68 A4,4 0 0 1 62,72 H46 A4,4 0 0 1 42,68 V48 A4,4 0 0 1 46,44 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M46,61 H49 A1,1 0 0 1 50,62 V66 A1,1 0 0 1 49,67 H46 A1,1 0 0 1 45,66 V62 A1,1 0 0 1 46,61 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M53,56 H56 A1,1 0 0 1 57,57 V66 A1,1 0 0 1 56,67 H53 A1,1 0 0 1 52,66 V57 A1,1 0 0 1 53,56 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M60,51 H63 A1,1 0 0 1 64,52 V66 A1,1 0 0 1 63,67 H60 A1,1 0 0 1 59,66 V52 A1,1 0 0 1 60,51 Z" />
+</vector>

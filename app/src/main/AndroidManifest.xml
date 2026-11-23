@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="类原生运营商信息优化"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault.DayNight">
+
+        <!-- LSPosed / Xposed 模块声明 -->
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="类原生运营商信息优化：运营商名改中文、LTE 显示 4G、锁屏双卡细竖线" />
+        <!-- 推荐作用域（旧版管理器读这个数组，新版读 assets/xposed_scope） -->
+        <meta-data android:name="xposedscope" android:resource="@array/xposedscope" />
+        <meta-data android:name="xposedminversion" android:value="93" />
+        <!-- 让模块自己的 SharedPreferences 可被注入进程读取 -->
+        <meta-data android:name="xposedsharedprefs" android:value="true" />
+
+        <!-- 设置页本体不再挂 LAUNCHER，桌面图标交给下面的 alias 控制，便于一键隐藏 -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="类原生运营商信息优化"
+            android:windowSoftInputMode="adjustResize">
+            <!-- LSPosed 模块页里的「打开」入口：管理器按这个 category 找模块的设置界面 -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="org.lsposed.manager.LAUNCH_MODULE" />
+            </intent-filter>
+        </activity>
+
+        <!-- 启动器图标的开关就是这个 alias：禁用 = 图标消失，启用 = 图标回来；隐藏后从 LSPosed 管理器打开设置页 -->
+        <activity-alias
+            android:name=".Launcher"
+            android:targetActivity=".SettingsActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="类原生运营商信息优化">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+    </application>
+
+</manifest>
