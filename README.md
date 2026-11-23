@@ -1,4 +1,4 @@
-# 类原生运营商信息优化（pe-l10n）
+# 类原生运营商信息优化（carrier-opt）
 
 面向 **PixelExperience / 类原生 Android 13** 的 LSPosed 模块，包名 `com.aosp.carrier`。
 主要解决国内双卡环境下的几个小毛病：LTE 显示成 4G、运营商名是英文、锁屏双卡分隔难看、信号图标挂着感叹号。
@@ -11,8 +11,8 @@
 | --- | --- | --- |
 | 显示 4G | LTE 一律显示 4G，载波聚合显示 4G+ | SystemUI、设置 |
 | 运营商中文化 | 移动 / 联通 / 电信 / 广电 | SystemUI、设置 |
-| 锁屏双卡简化 | 锁屏双卡时两个运营商名之间改细竖线 | SystemUI |
-| 修改分隔符 | 分隔符换成竖线字符，方便对比效果 | SystemUI |
+| 锁屏双卡简化 | 锁屏双卡时两个运营商名之间改细垒线 | SystemUI |
+| 修改分隔符 | 分隔符换成垒线字符，方便对比效果 | SystemUI |
 | 数据网络图标优化 | 抹掉信号图标上的感叹号；副作用是公共 WiFi 登录页不再自动提示 | SystemUI |
 | 搜网加速 | 手动搜网只扫 LTE/NR 并改成增量返回，边扫边出结果 | 设置 |
 | 隐藏启动器图标 | 禁用 alias，图标消失；仍可从 LSPosed 管理器打开设置页 | 自身 |
@@ -43,7 +43,7 @@ release 用的是 debug 签名，方便自用直装；正式分发请换成自�
 
 ## 说明
 
-- 开关状态写在 `Settings.System` 的 `pe_l10n_*` 键里，SystemUI 与设置页跨进程读取一致，LSPosed 偏好镜像只做兜底；
+- 开关状态写在 `Settings.System` 的 `pe_l10n_*` 键里，SystemUI 与设置页跳进程读取一致，LSPosed 偏好镜像只做兜底；
 - 「数据网络图标优化」会一并抹掉「未验证 / 数据关闭 / 无服务」这类标记，这是实现方式的副作用；
 - 去感叹号需要 root：模块会改 `captive_portal_mode` 与联网检测 URL，`su` 需已在 KernelSU / Magisk 里授权；
 - 图标只有 `mipmap-anydpi-v26` 的矢量自适应图标（minSdk 31，够用），没有放位图 fallback。
