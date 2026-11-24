@@ -11,11 +11,12 @@ import com.aosp.carrier.hooks.CarrierTextHook;
 import com.aosp.carrier.hooks.NetworkIconHook;
 import com.aosp.carrier.hooks.NetworkLabelHook;
 import com.aosp.carrier.hooks.ScanHook;
+import com.aosp.carrier.hooks.SettingsPanelHook;
 
 /**
  * 入口。按目标进程挂不同的 hook：
  *  - SystemUI ：网络类型标签（LTE->4G）、运营商名称（状态栏 + 锁屏）、锁屏双卡竖线
- *  - 设置     ：运营商名称、网络类型文字
+ *  - 设置     ：运营商名称、网络类型文字，并把开关直接嵌进「状态栏」页（无模块界面）
  */
 public class MainHook implements IXposedHookLoadPackage {
 
@@ -62,6 +63,7 @@ public class MainHook implements IXposedHookLoadPackage {
                 ScanHook.install(lp);
                 return "";
             }));
+            ok.append(run("panel", () -> SettingsPanelHook.install(lp)));
             Inject.installResponder(lp.classLoader, pkg, ok.toString());
             return;
         }

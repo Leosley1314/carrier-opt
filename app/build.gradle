@@ -10,8 +10,8 @@ android {
         applicationId "com.aosp.carrier"
         minSdk 31   // 只声明支持 Android 12 及以后
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "2.0"
     }
 
     buildTypes {
