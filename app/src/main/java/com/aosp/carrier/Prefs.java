@@ -45,7 +45,8 @@ public final class Prefs {
      * 取镜像里的 SharedPreferences。
      *
      * 以前这里是「进程内只读一次」，所以改完开关、不重启界面进程就永远读到旧值，
-     * 表现就是「运营商用简称」打开了但锁屏还是全称。改成按 TTL 重新 reload。
+     * 表现就是「运营商用简称」打开了但锁屏还是全称。改成按 TTL 重新 reload，
+     * 秒级跟上改动，同时避免每个状态回调都去碰一次文件。
      */
     private static synchronized XSharedPreferences remote() {
         try {
@@ -106,7 +107,6 @@ public final class Prefs {
     // ---- 供模块 App 自身使用 ----
 
     public static SharedPreferences local(Context ctx) {
-        return SharedPreferences.class.cast(
-                ctx.getSharedPreferences(FILE, Context.MODE_PRIVATE));
+        return ctx.getSharedPreferences(FILE, Context.MODE_PRIVATE);
     }
 }
