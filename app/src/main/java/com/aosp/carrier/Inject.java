@@ -20,6 +20,10 @@ public final class Inject {
     public static final String ACTION_PING = "com.aosp.carrier.PING";
     public static final String ACTION_PONG = "com.aosp.carrier.PONG";
     public static final String ACTION_REFRESH = "com.aosp.carrier.REFRESH";
+    /** 让 SystemUI 自己重启一次：设置页改完开关，点一下立刻按新值重绘。
+     *  设置进程是 system uid、SystemUI 是独立 uid，从外面既杀不掉它也没有 root；
+     *  但注入在 SystemUI 里的这段代码可以自己调 Process.killProcess，系统会把它拉起来。 */
+    public static final String ACTION_RESTART = "com.aosp.carrier.RESTART";
     public static final String EXTRA_DETAIL = "detail";
 
     private static String detail = "";
@@ -95,6 +99,20 @@ public final class Inject {
             @Override
             public void onReceive(Context c, Intent intent) {
                 if (intent == null) return;
+                if (ACTION_RESTART.equals(intent.getAction())) {
+                    XposedBridge.log(MainHook.TAG + " restart systemui by self-kill");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(150);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                            } catch (Throwable ignored) {
+                            }
+                        }
+                    }).start();
+                    return;
+                }
                 if (ACTION_REFRESH.equals(intent.getAction())) {
                     // 开关刚被改过，让各卡的控制器立刻重算一遍图标
                     com.aosp.carrier.hooks.NetworkIconHook.refresh();
@@ -109,6 +127,7 @@ public final class Inject {
         };
         IntentFilter filter = new IntentFilter(ACTION_PING);
         filter.addAction(ACTION_REFRESH);
+        filter.addAction(ACTION_RESTART);
         // Android 13 起动态注册必须带 RECEIVER_EXPORTED / NOT_EXPORTED，
         // 不带会抛 SecurityException，注册静默失败（之前自检一直「未生效」就是这个）。
         // SystemUI 是 targetSdk 33 的进程，这里必须显式给 EXPORTED。
